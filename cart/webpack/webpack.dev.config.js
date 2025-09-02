@@ -4,13 +4,8 @@ const { ModuleFederationPlugin } = require("webpack").container;
 module.exports = {
   mode: "development",
   entry: "./src/index.js",
-  output: {
-    filename: "bundle.[contenthash].js",
-    path: __dirname + "/dist",
-    clean: true,
-  },
   devServer: {
-    port: 8080,
+    port: 8082,
   },
   module: {
     rules: [
@@ -24,17 +19,17 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        test: /\.scss$/i,
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
     ],
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "container",
+      name: "cart",
       filename: "remoteEntry.js",
-      remotes: {
-        products: "products@http://localhost:8081/remoteEntry.js",
+      exposes: {
+        "./CartIndex": "./src/index",
       },
     }),
     new HtmlWebpackPlugin({

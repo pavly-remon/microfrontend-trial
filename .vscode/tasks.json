@@ -50,13 +50,38 @@
       }
     },
     {
+      "label": "Serve Cart",
+      "type": "shell",
+      "command": "npm run start",
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}/cart"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "fileLocation": "autoDetect",
+        "pattern": {
+          "regexp": "^(?!)$", // impossible to match anything
+          "file": 1,
+          "message": 2
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".+",
+          "endsPattern": "(Compiled successfully|compiled successfully|running at|Local:)"
+        }
+      }
+    },
+    {
       "label": "Serve Project",
       "group": "build",
       "type": "shell",
       "command": "echo Serving Project...",
       "dependsOn": [
         "Serve Products",
-        "Serve Container"
+        "Serve Container",
+        "Serve Cart"
       ],
       "dependsOrder": "parallel"
     }

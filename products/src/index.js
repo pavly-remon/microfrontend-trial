@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 
-import "./styles.css";
+import "./styles.scss";
 
 const productsContainer = document.getElementById("products-container");
 
@@ -25,4 +25,7 @@ products.forEach((product) => {
 });
 
 productsContainer.innerHTML = "";
+const title = document.createElement("h2");
+title.innerText = "Products List";
+productsContainer.appendChild(title);
 productsContainer.appendChild(productListElem);

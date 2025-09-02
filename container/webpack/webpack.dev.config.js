@@ -1,15 +1,11 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
+
 module.exports = {
   mode: "development",
   entry: "./src/index.js",
-  output: {
-    filename: "bundle.[contenthash].js",
-    path: __dirname + "/dist",
-    clean: true,
-  },
   devServer: {
-    port: 8081,
+    port: 8080,
   },
   module: {
     rules: [
@@ -23,17 +19,18 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        test: /\.scss$/i,
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
     ],
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "products",
+      name: "container",
       filename: "remoteEntry.js",
-      exposes: {
-        "./ProductIndex": "./src/index",
+      remotes: {
+        products: "products@http://localhost:8081/remoteEntry.js",
+        cart: "cart@http://localhost:8082/remoteEntry.js",
       },
     }),
     new HtmlWebpackPlugin({

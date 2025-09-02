@@ -1,0 +1,64 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Serve Container",
+      "type": "shell",
+      "command": "npm run start",
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}/container"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "fileLocation": "autoDetect",
+        "pattern": {
+          "regexp": "^(?!)$", // impossible to match anything
+          "file": 1,
+          "message": 2
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".+", // consider 'starting' immediately
+          "endsPattern": "(Compiled successfully|compiled successfully|running at|Local:)"
+        }
+      }
+    },
+    {
+      "label": "Serve Products",
+      "type": "shell",
+      "command": "npm run start",
+      "group": "build",
+      "options": {
+        "cwd": "${workspaceFolder}/products"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "fileLocation": "autoDetect",
+        "pattern": {
+          "regexp": "^(?!)$", // impossible to match anything
+          "file": 1,
+          "message": 2
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".+",
+          "endsPattern": "(Compiled successfully|compiled successfully|running at|Local:)"
+        }
+      }
+    },
+    {
+      "label": "Serve Project",
+      "group": "build",
+      "type": "shell",
+      "command": "echo Serving Project...",
+      "dependsOn": [
+        "Serve Products",
+        "Serve Container"
+      ],
+      "dependsOrder": "parallel"
+    }
+  ]
+}
